@@ -1,13 +1,58 @@
 from tkinter import *
+import random
 
 player_scorec = 0
 computer_scorec = 0
 
-options = [('rock',0),('paper',1),('scissors',2)]
-print(options)
+poptions = [('rock',0),('paper',1),('scissors',2)]
+
+def computerwin():
+    global computer_scorec,player_scorec
+    computer_scorec+=1
+    computerscore.config(text="Computer total score:"+str(computer_scorec))
+    playerscore.config(text="Player total score:"+str(player_scorec))
+
+def playerwin():
+    global computer_scorec,player_scorec
+    player_scorec+=1
+    computerscore.config(text="Computer total score:"+str(computer_scorec))
+    playerscore.config(text="Player total score:"+str(player_scorec))
+
+def draw():
+    global computer_scorec,player_scorec
+    computerscore.config(text="Computer total score:"+str(computer_scorec))
+    playerscore.config(text="Player total score:"+str(player_scorec))
+
+def computer_random():
+    return random.choice(poptions)
 
 def player_choice(pinput):
-    print(str(pinput[0]))
+    print(str(pinput[1]))
+    com = computer_random()
+    print(com)
+    playerselect.config(text="You selected:"+pinput[0])
+    computerselect.config(text="Computer selected:"+com[0])
+    if pinput==com:
+        draw()
+# if the player chooses rock
+    if pinput[1] == 0:
+        if com[1] ==2: 
+            playerwin()
+        if com[1] == 1:
+            computerwin()
+# if player chooses scissors            
+    if pinput[1] == 2:
+        if com[1] ==1: 
+            playerwin()
+        if com[1] == 0:
+            computerwin()
+#if player chooses paper
+    if pinput[1] == 1:
+        if com[1] ==0: 
+            playerwin()
+        if com[1] == 2:
+            computerwin()
+
 
 game = Tk()
 game.geometry("600x400")
@@ -23,9 +68,9 @@ computerselect = Label(game,text="Computer selected:", fg="black",bg="honeydew3"
 playerscore = Label(game,text="Player total score:", fg="black",bg="honeydew3", font=("Calibri",12))
 computerscore = Label(game,text="Computer total score:", fg="black",bg="honeydew3", font=("Calibri",12))
 
-rock = Button(game,text="Rock",bg="LightPink2",command=lambda: player_choice(options[0]))
-paper = Button(game,text="Paper",bg="gray60",command=lambda: player_choice(options[1]))
-scissors = Button(game,text="Scissors", bg="LightBlue1",command=lambda: player_choice(options[2]))
+rock = Button(game,text="Rock",bg="LightPink2",command=lambda: player_choice(poptions[0]))
+paper = Button(game,text="Paper",bg="gray60",command=lambda: player_choice(poptions[1]))
+scissors = Button(game,text="Scissors", bg="LightBlue1",command=lambda: player_choice(poptions[2]))
 
 title.grid(row=1,column=1)
 winner.grid(row=2,column=1)
